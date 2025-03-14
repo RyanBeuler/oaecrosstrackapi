@@ -40,13 +40,13 @@ pipeline {
         stage('Deploy') {
             steps {
                 // Stop the existing service if it's running
-                sh 'ssh user@your-vps "sudo systemctl stop oaedotnet-api-service.service || true"'
+                sh 'ssh jenkins@ylocalhost "sudo systemctl stop oaedotnet-api-service.service || true"'
                 
                 // Copy the published files to your VPS
-                sh 'scp -r ./publish/* user@your-vps:/var/www/backend-api/'
+                sh 'scp -r ./publish/* jenkins@ylocalhost:/var/www/backend-api/'
                 
                 // Start the service
-                sh 'ssh user@your-vps "sudo systemctl start oaedotnet-api-service.service"'
+                sh 'ssh jenkins@ylocalhost "sudo systemctl start oaedotnet-api-service.service"'
             }
         }
     }
