@@ -1,0 +1,6 @@
+@OaeCrossTrackApi_HostAddress = http://localhost:5128
+
+GET {{OaeCrossTrackApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
