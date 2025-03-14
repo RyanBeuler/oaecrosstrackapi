@@ -140,3 +140,4 @@ C:\Dev\Web\OaeCrossTrackApi\obj\Debug\net9.0\refint\OaeCrossTrackApi.dll
 C:\Dev\Web\OaeCrossTrackApi\obj\Debug\net9.0\OaeCrossTrackApi.pdb
 C:\Dev\Web\OaeCrossTrackApi\obj\Debug\net9.0\OaeCrossTrackApi.genruntimeconfig.cache
 C:\Dev\Web\OaeCrossTrackApi\obj\Debug\net9.0\ref\OaeCrossTrackApi.dll
+C:\Dev\Web\OaeCrossTrackApi\obj\Debug\net9.0\OaeCrossTrackApi.sourcelink.json

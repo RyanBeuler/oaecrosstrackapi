@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OaeCrossTrackApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+866b37aa4ec4842691e9cc0505af99f206860ca6")]
 [assembly: System.Reflection.AssemblyProductAttribute("OaeCrossTrackApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OaeCrossTrackApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
