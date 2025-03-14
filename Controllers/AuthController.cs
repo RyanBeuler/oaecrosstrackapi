@@ -29,13 +29,6 @@ namespace OaeCrosstrackApi.Controllers
             return Ok(response);
         }
 
-        [HttpOptions("login")]
-        public IActionResult Preflight()
-        {
-            Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:4200");
-            Response.Headers.Add("Access-Control-Allow-Methods", "POST, OPTIONS");
-            Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Authorization");
-            return Ok();
-        }
+        
     }
 }

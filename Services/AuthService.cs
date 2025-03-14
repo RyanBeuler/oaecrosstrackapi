@@ -38,7 +38,14 @@ namespace OaeCrosstrackApi.Services
             // Check if user exists and verify password
             if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
             {
-                return null; // Will be handled as Unauthorized in controller
+                return new LoginResponseDto
+                {
+                    Token = string.Empty,
+                    Username = string.Empty,
+                    UserId = 0,
+                    FirstName = string.Empty,
+                    LastName = string.Empty
+                }; // Will be handled as Unauthorized in controller
             }
 
             // Update last login timestamp
@@ -51,10 +58,10 @@ namespace OaeCrosstrackApi.Services
             return new LoginResponseDto
             {
                 Token = token,
-                Username = user.Username,
+                Username = user.Username!,
                 UserId = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName
+                FirstName = user.FirstName ?? string.Empty,
+                LastName = user.LastName ?? string.Empty
             };
         }
 
@@ -68,7 +75,7 @@ namespace OaeCrosstrackApi.Services
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Name, user.Username)
+                    new Claim(ClaimTypes.Name, user.Username ?? string.Empty)
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
                 Issuer = _jwtSettings.Issuer,

@@ -20,7 +20,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.Configure<JwtSettings>(jwtSettings);
 
-var secret = jwtSettings.Get<JwtSettings>().Secret;
+var jwtSettingsValue = jwtSettings.Get<JwtSettings>();
+if (jwtSettingsValue == null)
+{
+    throw new InvalidOperationException("JWT settings are not configured properly.");
+}
+var secret = jwtSettingsValue.Secret;
 var key = Encoding.ASCII.GetBytes(secret);
 
 builder.Services.AddAuthentication(x =>
@@ -38,8 +43,8 @@ builder.Services.AddAuthentication(x =>
         IssuerSigningKey = new SymmetricSecurityKey(key),
         ValidateIssuer = true,
         ValidateAudience = true,
-        ValidIssuer = jwtSettings.Get<JwtSettings>().Issuer,
-        ValidAudience = jwtSettings.Get<JwtSettings>().Audience
+        ValidIssuer = jwtSettings.Get<JwtSettings>()?.Issuer,
+        ValidAudience = jwtSettings.Get<JwtSettings>()?.Audience
     };
 });
 
@@ -53,7 +58,7 @@ builder.Services.AddCors(options =>
         builder =>
         {
             builder
-                .WithOrigins("https://oaecrosstrack.com", "https://localhost:4200")
+                .WithOrigins("https://oaecrosstrack.com")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials();
@@ -72,17 +77,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("AllowSpecificOrigins");
-
-// Ensure preflight requests are processed correctly
-app.Use(async (context, next) =>
-{
-    if (context.Request.Method == "OPTIONS")
-    {
-        context.Response.StatusCode = 200;
-        return;
-    }
-    await next();
-});
 
 app.UseAuthentication();
 app.UseAuthorization();
