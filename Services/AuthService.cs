@@ -15,7 +15,7 @@ namespace OaeCrosstrackApi.Services
 {
     public interface IAuthService
     {
-        Task<LoginResponseDto> LoginAsync(LoginRequestDto request);
+        Task<LoginResponseDto?> LoginAsync(LoginRequestDto request);
     }
 
     public class AuthService : IAuthService
@@ -29,7 +29,7 @@ namespace OaeCrosstrackApi.Services
             _jwtSettings = jwtSettings.Value;
         }
 
-        public async Task<LoginResponseDto> LoginAsync(LoginRequestDto request)
+        public async Task<LoginResponseDto?> LoginAsync(LoginRequestDto request)
         {
             // Find user by username
             var user = await _context.Users
@@ -38,14 +38,7 @@ namespace OaeCrosstrackApi.Services
             // Check if user exists and verify password
             if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
             {
-                return new LoginResponseDto
-                {
-                    Token = string.Empty,
-                    Username = string.Empty,
-                    UserId = 0,
-                    FirstName = string.Empty,
-                    LastName = string.Empty
-                }; // Will be handled as Unauthorized in controller
+                return null; // Will be handled as Unauthorized in controller
             }
 
             // Update last login timestamp
