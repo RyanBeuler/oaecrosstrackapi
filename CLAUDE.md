@@ -56,7 +56,7 @@ PostgreSQL on localhost:5432. User table includes:
 ## Development Notes
 
 - API runs on `http://localhost:5128`
-- Swagger UI available at `/swagger` (dev only)
+- Swagger UI at `/swagger` (dev only)
 - CORS allows `http://localhost:4200` and `https://oaecrosstrack.com`
 - Nullable reference types enabled
 - Implicit usings enabled
