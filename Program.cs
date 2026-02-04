@@ -50,6 +50,7 @@ builder.Services.AddAuthentication(x =>
 
 // Register services
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAthleteService, AthleteService>();
 
 // Add CORS policy
 builder.Services.AddCors(options =>
@@ -58,7 +59,7 @@ builder.Services.AddCors(options =>
         builder =>
         {
             builder
-                .WithOrigins("https://oaecrosstrack.com")
+                .WithOrigins("https://oaecrosstrack.com", "http://localhost:4200")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials();
