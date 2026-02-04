@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OaeCrosstrackApi.Data;
@@ -11,9 +12,11 @@ using OaeCrosstrackApi.Data;
 namespace OaeCrossTrackApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260204144925_AddSportsAndEvents")]
+    partial class AddSportsAndEvents
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,36 +109,6 @@ namespace OaeCrossTrackApi.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("OaeCrosstrackApi.Models.RosterEntry", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AthleteId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("SportId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SportId");
-
-                    b.HasIndex("AthleteId", "SportId", "Year")
-                        .IsUnique();
-
-                    b.ToTable("RosterEntries");
-                });
-
             modelBuilder.Entity("OaeCrosstrackApi.Models.Sport", b =>
                 {
                     b.Property<int>("Id")
@@ -221,25 +194,6 @@ namespace OaeCrossTrackApi.Migrations
                         .HasForeignKey("SportId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Sport");
-                });
-
-            modelBuilder.Entity("OaeCrosstrackApi.Models.RosterEntry", b =>
-                {
-                    b.HasOne("OaeCrosstrackApi.Models.Athlete", "Athlete")
-                        .WithMany()
-                        .HasForeignKey("AthleteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("OaeCrosstrackApi.Models.Sport", "Sport")
-                        .WithMany()
-                        .HasForeignKey("SportId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Athlete");
 
                     b.Navigation("Sport");
                 });
