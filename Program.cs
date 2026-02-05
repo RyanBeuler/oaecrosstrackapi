@@ -54,6 +54,9 @@ builder.Services.AddScoped<IAthleteService, AthleteService>();
 builder.Services.AddScoped<ISportService, SportService>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IRosterService, RosterService>();
+builder.Services.AddScoped<IMeetService, MeetService>();
+builder.Services.AddScoped<IResultService, ResultService>();
+builder.Services.AddScoped<IRecordService, RecordService>();
 
 // Add CORS policy
 builder.Services.AddCors(options =>

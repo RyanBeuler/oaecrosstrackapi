@@ -15,6 +15,9 @@ namespace OaeCrosstrackApi.Data
         public DbSet<Sport> Sports { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<RosterEntry> RosterEntries { get; set; }
+        public DbSet<Meet> Meets { get; set; }
+        public DbSet<Result> Results { get; set; }
+        public DbSet<Record> Records { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -61,6 +64,50 @@ namespace OaeCrosstrackApi.Data
                 .HasOne(r => r.Sport)
                 .WithMany()
                 .HasForeignKey(r => r.SportId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure Meet entity
+            modelBuilder.Entity<Meet>()
+                .HasOne(m => m.Sport)
+                .WithMany()
+                .HasForeignKey(m => m.SportId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure Result entity - unique constraint on Athlete+Meet+Event
+            modelBuilder.Entity<Result>()
+                .HasIndex(r => new { r.AthleteId, r.MeetId, r.EventId })
+                .IsUnique();
+
+            // Configure Result relationships
+            modelBuilder.Entity<Result>()
+                .HasOne(r => r.Athlete)
+                .WithMany()
+                .HasForeignKey(r => r.AthleteId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Result>()
+                .HasOne(r => r.Meet)
+                .WithMany()
+                .HasForeignKey(r => r.MeetId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Result>()
+                .HasOne(r => r.Event)
+                .WithMany()
+                .HasForeignKey(r => r.EventId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure Record entity
+            modelBuilder.Entity<Record>()
+                .HasOne(r => r.Event)
+                .WithMany()
+                .HasForeignKey(r => r.EventId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Record>()
+                .HasOne(r => r.Athlete)
+                .WithMany()
+                .HasForeignKey(r => r.AthleteId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

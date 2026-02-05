@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OaeCrosstrackApi.Data;
@@ -11,9 +12,11 @@ using OaeCrosstrackApi.Data;
 namespace OaeCrossTrackApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260205011017_AddMeetsTable")]
+    partial class AddMeetsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,129 +164,6 @@ namespace OaeCrossTrackApi.Migrations
                     b.ToTable("Meets");
                 });
 
-            modelBuilder.Entity("OaeCrosstrackApi.Models.Record", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AthleteId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
-
-                    b.Property<string>("GradeAtTime")
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Location")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("MeetName")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("Performance")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<DateTime>("PerformanceDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<decimal>("PerformanceValue")
-                        .HasColumnType("decimal(18,4)");
-
-                    b.Property<string>("RecordType")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AthleteId");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("Records");
-                });
-
-            modelBuilder.Entity("OaeCrosstrackApi.Models.Result", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AthleteId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsPR")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("MeetId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<decimal?>("Performance")
-                        .HasColumnType("decimal(10,3)");
-
-                    b.Property<string>("PerformanceDisplay")
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
-
-                    b.Property<int?>("Place")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("Points")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("MeetId");
-
-                    b.HasIndex("AthleteId", "MeetId", "EventId")
-                        .IsUnique();
-
-                    b.ToTable("Results");
-                });
-
             modelBuilder.Entity("OaeCrosstrackApi.Models.RosterEntry", b =>
                 {
                     b.Property<int>("Id")
@@ -412,52 +292,6 @@ namespace OaeCrossTrackApi.Migrations
                         .IsRequired();
 
                     b.Navigation("Sport");
-                });
-
-            modelBuilder.Entity("OaeCrosstrackApi.Models.Record", b =>
-                {
-                    b.HasOne("OaeCrosstrackApi.Models.Athlete", "Athlete")
-                        .WithMany()
-                        .HasForeignKey("AthleteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("OaeCrosstrackApi.Models.Event", "Event")
-                        .WithMany()
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Athlete");
-
-                    b.Navigation("Event");
-                });
-
-            modelBuilder.Entity("OaeCrosstrackApi.Models.Result", b =>
-                {
-                    b.HasOne("OaeCrosstrackApi.Models.Athlete", "Athlete")
-                        .WithMany()
-                        .HasForeignKey("AthleteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("OaeCrosstrackApi.Models.Event", "Event")
-                        .WithMany()
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("OaeCrosstrackApi.Models.Meet", "Meet")
-                        .WithMany()
-                        .HasForeignKey("MeetId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Athlete");
-
-                    b.Navigation("Event");
-
-                    b.Navigation("Meet");
                 });
 
             modelBuilder.Entity("OaeCrosstrackApi.Models.RosterEntry", b =>
