@@ -26,6 +26,10 @@ namespace OaeCrosstrackApi.DTOs.Meets
 
         public bool IsHome { get; set; } = true;
 
+        public int? OurScore { get; set; }
+
+        public int? OpponentScore { get; set; }
+
         [StringLength(500)]
         public string? Notes { get; set; }
     }
@@ -54,6 +58,10 @@ namespace OaeCrosstrackApi.DTOs.Meets
 
         public bool IsHome { get; set; } = true;
 
+        public int? OurScore { get; set; }
+
+        public int? OpponentScore { get; set; }
+
         [StringLength(500)]
         public string? Notes { get; set; }
     }
@@ -69,6 +77,8 @@ namespace OaeCrosstrackApi.DTOs.Meets
         public required string MeetType { get; set; }
         public string? Opponent { get; set; }
         public bool IsHome { get; set; }
+        public int? OurScore { get; set; }
+        public int? OpponentScore { get; set; }
         public string? Notes { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedAt { get; set; }

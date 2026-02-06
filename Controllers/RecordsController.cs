@@ -18,6 +18,7 @@ namespace OaeCrosstrackApi.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<RecordResponseDto>>> GetAll(
             [FromQuery] int? eventId,
             [FromQuery] int? sportId,
@@ -41,6 +42,7 @@ namespace OaeCrosstrackApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<RecordResponseDto>> GetById(int id)
         {
             var record = await _recordService.GetByIdAsync(id);
@@ -54,6 +56,7 @@ namespace OaeCrosstrackApi.Controllers
         }
 
         [HttpGet("event/{eventId}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<RecordResponseDto>>> GetByEvent(int eventId)
         {
             var records = await _recordService.GetByEventAsync(eventId);
@@ -61,6 +64,7 @@ namespace OaeCrosstrackApi.Controllers
         }
 
         [HttpGet("sport/{sportId}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<RecordResponseDto>>> GetBySport(int sportId)
         {
             var records = await _recordService.GetBySportAsync(sportId);
@@ -68,6 +72,7 @@ namespace OaeCrosstrackApi.Controllers
         }
 
         [HttpGet("leaderboard/{eventId}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<RecordResponseDto>>> GetLeaderboard(
             int eventId,
             [FromQuery] string gender,

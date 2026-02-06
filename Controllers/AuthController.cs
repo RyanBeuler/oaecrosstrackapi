@@ -29,12 +29,6 @@ namespace OaeCrosstrackApi.Controllers
             return Ok(response);
         }
 
-        [HttpGet("health")]
-        public IActionResult HealthCheck()
-        {
-            return Ok("API is working");
-        }
-
         
     }
 }

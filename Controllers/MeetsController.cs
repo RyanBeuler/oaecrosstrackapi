@@ -18,6 +18,7 @@ namespace OaeCrosstrackApi.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll(
             [FromQuery] int? sportId,
             [FromQuery] int? year,
@@ -28,6 +29,7 @@ namespace OaeCrosstrackApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(int id)
         {
             var meet = await _meetService.GetByIdAsync(id);
@@ -41,6 +43,7 @@ namespace OaeCrosstrackApi.Controllers
         }
 
         [HttpGet("years")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAvailableYears()
         {
             var years = await _meetService.GetAvailableYearsAsync();

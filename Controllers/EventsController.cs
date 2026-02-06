@@ -18,6 +18,7 @@ namespace OaeCrosstrackApi.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll([FromQuery] bool includeInactive = false)
         {
             var events = await _eventService.GetAllAsync(includeInactive);
@@ -25,6 +26,7 @@ namespace OaeCrosstrackApi.Controllers
         }
 
         [HttpGet("sport/{sportId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetBySportId(int sportId, [FromQuery] bool includeInactive = false)
         {
             var events = await _eventService.GetBySportIdAsync(sportId, includeInactive);
@@ -32,6 +34,7 @@ namespace OaeCrosstrackApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(int id)
         {
             var evt = await _eventService.GetByIdAsync(id);

@@ -33,6 +33,10 @@ namespace OaeCrosstrackApi.Models
 
         public bool IsHome { get; set; } = true;
 
+        public int? OurScore { get; set; }
+
+        public int? OpponentScore { get; set; }
+
         [StringLength(500)]
         public string? Notes { get; set; }
 
