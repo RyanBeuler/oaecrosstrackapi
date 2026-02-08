@@ -8,8 +8,8 @@ namespace OaeCrosstrackApi.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        public int AthleteId { get; set; }
+        // Nullable for relay events (relay results have no individual athlete)
+        public int? AthleteId { get; set; }
 
         [ForeignKey("AthleteId")]
         public Athlete? Athlete { get; set; }
@@ -25,6 +25,21 @@ namespace OaeCrosstrackApi.Models
 
         [ForeignKey("EventId")]
         public Event? Event { get; set; }
+
+        // For relay events: team name (e.g., "Williamson Central 'A'")
+        [StringLength(100)]
+        public string? RelayTeamName { get; set; }
+
+        // Heat number for track events
+        public int? HeatNumber { get; set; }
+
+        // Result status: null = normal, "DQ", "DNS", "DNF", "SCR"
+        [StringLength(10)]
+        public string? ResultStatus { get; set; }
+
+        // Wind speed in m/s (outdoor sprints/jumps)
+        [Column(TypeName = "decimal(5,2)")]
+        public decimal? Wind { get; set; }
 
         // Performance stored as decimal (seconds for time, inches/cm for distance/height)
         [Column(TypeName = "decimal(10,3)")]

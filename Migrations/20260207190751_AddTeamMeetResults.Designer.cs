@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OaeCrosstrackApi.Data;
@@ -11,9 +12,11 @@ using OaeCrosstrackApi.Data;
 namespace OaeCrossTrackApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260207190751_AddTeamMeetResults")]
+    partial class AddTeamMeetResults
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -274,6 +277,12 @@ namespace OaeCrossTrackApi.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<int?>("OpponentScore")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("OurScore")
+                        .HasColumnType("integer");
+
                     b.Property<int>("SportId")
                         .HasColumnType("integer");
 
@@ -360,16 +369,13 @@ namespace OaeCrossTrackApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AthleteId")
+                    b.Property<int>("AthleteId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("EventId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("HeatNumber")
                         .HasColumnType("integer");
 
                     b.Property<bool>("IsActive")
@@ -398,19 +404,8 @@ namespace OaeCrossTrackApi.Migrations
                     b.Property<int?>("Points")
                         .HasColumnType("integer");
 
-                    b.Property<string>("RelayTeamName")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<string>("ResultStatus")
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
-
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<decimal?>("Wind")
-                        .HasColumnType("decimal(5,2)");
 
                     b.HasKey("Id");
 
@@ -661,7 +656,8 @@ namespace OaeCrossTrackApi.Migrations
                     b.HasOne("OaeCrosstrackApi.Models.Athlete", "Athlete")
                         .WithMany()
                         .HasForeignKey("AthleteId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("OaeCrosstrackApi.Models.Event", "Event")
                         .WithMany()

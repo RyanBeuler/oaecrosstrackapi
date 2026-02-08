@@ -75,8 +75,6 @@ namespace OaeCrosstrackApi.Services
                 MeetType = dto.MeetType,
                 Opponent = dto.Opponent,
                 IsHome = dto.IsHome,
-                OurScore = dto.OurScore,
-                OpponentScore = dto.OpponentScore,
                 Notes = dto.Notes,
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow,
@@ -110,8 +108,6 @@ namespace OaeCrosstrackApi.Services
             meet.MeetType = dto.MeetType;
             meet.Opponent = dto.Opponent;
             meet.IsHome = dto.IsHome;
-            meet.OurScore = dto.OurScore;
-            meet.OpponentScore = dto.OpponentScore;
             meet.Notes = dto.Notes;
             meet.UpdatedAt = DateTime.UtcNow;
 
@@ -175,8 +171,6 @@ namespace OaeCrosstrackApi.Services
                 MeetType = meet.MeetType,
                 Opponent = meet.Opponent,
                 IsHome = meet.IsHome,
-                OurScore = meet.OurScore,
-                OpponentScore = meet.OpponentScore,
                 Notes = meet.Notes,
                 IsActive = meet.IsActive,
                 CreatedAt = meet.CreatedAt,

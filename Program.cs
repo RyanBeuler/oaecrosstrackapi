@@ -57,6 +57,9 @@ builder.Services.AddScoped<IRosterService, RosterService>();
 builder.Services.AddScoped<IMeetService, MeetService>();
 builder.Services.AddScoped<IResultService, ResultService>();
 builder.Services.AddScoped<IRecordService, RecordService>();
+builder.Services.AddScoped<IHistoryService, HistoryService>();
+builder.Services.AddScoped<IDashService, DashService>();
+builder.Services.AddScoped<ITeamMeetResultService, TeamMeetResultService>();
 
 // Add CORS policy
 builder.Services.AddCors(options =>

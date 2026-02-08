@@ -86,6 +86,10 @@ namespace OaeCrosstrackApi.Services
                 AthleteId = dto.AthleteId,
                 MeetId = dto.MeetId,
                 EventId = dto.EventId,
+                RelayTeamName = dto.RelayTeamName,
+                HeatNumber = dto.HeatNumber,
+                ResultStatus = dto.ResultStatus,
+                Wind = dto.Wind,
                 Performance = dto.Performance,
                 PerformanceDisplay = dto.PerformanceDisplay,
                 Place = dto.Place,
@@ -101,7 +105,10 @@ namespace OaeCrosstrackApi.Services
             await _context.SaveChangesAsync();
 
             // Reload with navigation properties
-            await _context.Entry(result).Reference(r => r.Athlete).LoadAsync();
+            if (result.AthleteId.HasValue)
+            {
+                await _context.Entry(result).Reference(r => r.Athlete).LoadAsync();
+            }
             await _context.Entry(result).Reference(r => r.Meet).LoadAsync();
             await _context.Entry(result).Reference(r => r.Event).LoadAsync();
 
@@ -128,6 +135,9 @@ namespace OaeCrosstrackApi.Services
                         AthleteId = athleteResult.AthleteId,
                         MeetId = dto.MeetId,
                         EventId = dto.EventId,
+                        HeatNumber = athleteResult.HeatNumber,
+                        ResultStatus = athleteResult.ResultStatus,
+                        Wind = athleteResult.Wind,
                         Performance = athleteResult.Performance,
                         PerformanceDisplay = athleteResult.PerformanceDisplay,
                         Place = athleteResult.Place,
@@ -166,6 +176,10 @@ namespace OaeCrosstrackApi.Services
             result.AthleteId = dto.AthleteId;
             result.MeetId = dto.MeetId;
             result.EventId = dto.EventId;
+            result.RelayTeamName = dto.RelayTeamName;
+            result.HeatNumber = dto.HeatNumber;
+            result.ResultStatus = dto.ResultStatus;
+            result.Wind = dto.Wind;
             result.Performance = dto.Performance;
             result.PerformanceDisplay = dto.PerformanceDisplay;
             result.Place = dto.Place;
@@ -177,7 +191,10 @@ namespace OaeCrosstrackApi.Services
             await _context.SaveChangesAsync();
 
             // Reload navigation properties if they changed
-            await _context.Entry(result).Reference(r => r.Athlete).LoadAsync();
+            if (result.AthleteId.HasValue)
+            {
+                await _context.Entry(result).Reference(r => r.Athlete).LoadAsync();
+            }
             await _context.Entry(result).Reference(r => r.Meet).LoadAsync();
             await _context.Entry(result).Reference(r => r.Event).LoadAsync();
 
@@ -218,13 +235,19 @@ namespace OaeCrosstrackApi.Services
                 AthleteId = result.AthleteId,
                 AthleteFirstName = result.Athlete?.FirstName ?? string.Empty,
                 AthleteLastName = result.Athlete?.LastName ?? string.Empty,
-                AthleteGradeLevel = CalculateGradeLevel(result.Athlete?.GraduationYear ?? 0),
+                AthleteGradeLevel = result.AthleteId.HasValue
+                    ? CalculateGradeLevel(result.Athlete?.GraduationYear ?? 0)
+                    : string.Empty,
                 MeetId = result.MeetId,
                 MeetName = result.Meet?.Name ?? string.Empty,
                 MeetDate = result.Meet?.MeetDate ?? DateTime.MinValue,
                 EventId = result.EventId,
                 EventName = result.Event?.Name ?? string.Empty,
                 EventType = result.Event?.EventType ?? string.Empty,
+                RelayTeamName = result.RelayTeamName,
+                HeatNumber = result.HeatNumber,
+                ResultStatus = result.ResultStatus,
+                Wind = result.Wind,
                 Performance = result.Performance,
                 PerformanceDisplay = result.PerformanceDisplay,
                 Place = result.Place,

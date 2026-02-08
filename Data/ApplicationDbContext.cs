@@ -18,6 +18,10 @@ namespace OaeCrosstrackApi.Data
         public DbSet<Meet> Meets { get; set; }
         public DbSet<Result> Results { get; set; }
         public DbSet<Record> Records { get; set; }
+        public DbSet<HistoryContent> HistoryContents { get; set; }
+        public DbSet<DashContent> DashContents { get; set; }
+        public DbSet<DashFile> DashFiles { get; set; }
+        public DbSet<TeamMeetResult> TeamMeetResults { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -108,6 +112,36 @@ namespace OaeCrosstrackApi.Data
                 .HasOne(r => r.Athlete)
                 .WithMany()
                 .HasForeignKey(r => r.AthleteId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure HistoryContent entity - one doc per sport
+            modelBuilder.Entity<HistoryContent>()
+                .HasIndex(h => h.SportId)
+                .IsUnique();
+
+            modelBuilder.Entity<HistoryContent>()
+                .HasOne(h => h.Sport)
+                .WithMany()
+                .HasForeignKey(h => h.SportId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure DashContent entity - one doc per year
+            modelBuilder.Entity<DashContent>()
+                .HasIndex(d => d.Year)
+                .IsUnique();
+
+            // Configure DashFile entity
+            modelBuilder.Entity<DashFile>()
+                .HasOne(f => f.DashContent)
+                .WithMany(d => d.Files)
+                .HasForeignKey(f => f.DashContentId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Configure TeamMeetResult entity
+            modelBuilder.Entity<TeamMeetResult>()
+                .HasOne(t => t.Sport)
+                .WithMany()
+                .HasForeignKey(t => t.SportId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

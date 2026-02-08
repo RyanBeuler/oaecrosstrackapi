@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OaeCrosstrackApi.Models
 {
-    public class Meet
+    public class TeamMeetResult
     {
         [Key]
         public int Id { get; set; }
@@ -15,23 +15,30 @@ namespace OaeCrosstrackApi.Models
         public Sport? Sport { get; set; }
 
         [Required]
-        [StringLength(100)]
-        public required string Name { get; set; }
-
-        [StringLength(200)]
-        public string? Location { get; set; }
+        public int Year { get; set; }
 
         [Required]
         public DateTime MeetDate { get; set; }
 
         [Required]
-        [StringLength(20)]
-        public required string MeetType { get; set; } // Practice, Dual, Invitational, Championship
+        [StringLength(1)]
+        public required string Gender { get; set; } // "M" or "F"
 
+        [Required]
         [StringLength(100)]
-        public string? Opponent { get; set; }
+        public required string HomeTeam { get; set; }
 
-        public bool IsHome { get; set; } = true;
+        [Required]
+        [StringLength(100)]
+        public required string AwayTeam { get; set; }
+
+        [Required]
+        public int HomeScore { get; set; }
+
+        [Required]
+        public int AwayScore { get; set; }
+
+        public bool IsDivisionMatch { get; set; } = false;
 
         [StringLength(500)]
         public string? Notes { get; set; }
