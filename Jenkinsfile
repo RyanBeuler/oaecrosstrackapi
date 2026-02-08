@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    when {
-        branch 'master'
-    }
-
     environment {
         DOTNET_CLI_HOME = '/tmp/dotnet_cli_home'
         DOTNET_CLI_TELEMETRY_OPTOUT = '1'
