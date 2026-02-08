@@ -50,6 +50,16 @@ builder.Services.AddAuthentication(x =>
 
 // Register services
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAthleteService, AthleteService>();
+builder.Services.AddScoped<ISportService, SportService>();
+builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IRosterService, RosterService>();
+builder.Services.AddScoped<IMeetService, MeetService>();
+builder.Services.AddScoped<IResultService, ResultService>();
+builder.Services.AddScoped<IRecordService, RecordService>();
+builder.Services.AddScoped<IHistoryService, HistoryService>();
+builder.Services.AddScoped<IDashService, DashService>();
+builder.Services.AddScoped<ITeamMeetResultService, TeamMeetResultService>();
 
 // Add CORS policy
 builder.Services.AddCors(options =>
@@ -58,7 +68,7 @@ builder.Services.AddCors(options =>
         builder =>
         {
             builder
-                .WithOrigins("https://oaecrosstrack.com")
+                .WithOrigins("https://oaecrosstrack.com", "http://localhost:4200")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials();
